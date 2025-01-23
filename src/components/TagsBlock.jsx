@@ -1,41 +1,30 @@
-import React from "react";
+import React from 'react';
+import TagIcon from '@mui/icons-material/Tag';
+import Skeleton from '@mui/material/Skeleton';
 
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import TagIcon from "@mui/icons-material/Tag";
-import ListItemText from "@mui/material/ListItemText";
-import Skeleton from "@mui/material/Skeleton";
-
-import { SideBlock } from "./SideBlock";
-import { Link } from "react-router-dom";
+import { SideBlock } from './SideBlock';
+import { Link } from 'react-router-dom';
+import { Box, Chip } from '@mui/material';
 
 export const TagsBlock = ({ items, isLoading = true }) => {
-  return (
-    <SideBlock title="Тэги">
-      <List>
-        {(isLoading ? [...Array(5)] : items).map((name, i) => (
-          <Link
-            style={{ textDecoration: "none", color: "black" }}
-            to={`/tags/${name}`}
-            key={i}
-          >
-            <ListItem key={i} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <TagIcon />
-                </ListItemIcon>
-                {isLoading ? (
-                  <Skeleton width={100} />
-                ) : (
-                  <ListItemText primary={name} />
-                )}
-              </ListItemButton>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </SideBlock>
-  );
+    return (
+        <SideBlock title="Категории">
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center', padding: 2 }}>
+                {(isLoading ? [...Array(5)] : items).map((name, i) => (
+                    <Link
+                        style={{ textDecoration: 'none', color: 'black' }}
+                        to={`/tags/${name}`}
+                        key={i}
+                    >
+                        <Chip
+                            icon={<TagIcon />}
+                            label={isLoading ? <Skeleton width={100} /> : name}
+                            variant="outlined"
+                            style={{ cursor: 'pointer', fontSize: 16 }}
+                        />
+                    </Link>
+                ))}
+            </Box>
+        </SideBlock>
+    );
 };

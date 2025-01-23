@@ -6,12 +6,21 @@ import axios from '../axios';
 import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAuthMe } from '../redux/slices/auth';
 
 export const FullPost = () => {
     const [data, setData] = React.useState();
     const [comments, setComments] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
+    const user = useSelector((state) => state.auth.data);
     const { id } = useParams();
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(fetchAuthMe());
+    }, [dispatch]);
+
     React.useEffect(() => {
         axios
             .get(`/posts/${id}`)
@@ -57,8 +66,8 @@ export const FullPost = () => {
                 <Index
                     postId={id}
                     onAddComment={handleAddComment}
-                    imageUrl={data.user.avatarUrl}
-                    fullName={data.user.fullName}
+                    imageUrl={user.avatarUrl}
+                    fullName={user.fullName}
                 />
             </CommentsBlock>
         </>
