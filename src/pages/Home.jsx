@@ -21,7 +21,7 @@ export const Home = () => {
 
     const [activeTab, setActiveTab] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
-    const POSTS_PER_PAGE = 3;
+    const POSTS_PER_PAGE = 5;
 
     const isPostsLoading = posts.status === 'loading';
     const isTagsLoading = tags.status === 'loading';

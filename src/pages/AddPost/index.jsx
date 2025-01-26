@@ -45,15 +45,18 @@ export const AddPost = () => {
 
   const onSubmit = async () => {
     try {
-      // setLoading(true);
-
+      
       const fields = {
         title,
         imageUrl,
-        tags,
+        tags: tags
+        .split(',') // Разделяем строку по запятым
+        .map(tag => tag.replace(/\s+/g, '')) // Убираем пробелы из каждого элемента
+        .join(','), // Преобразуем обратно в строку с разделением запятыми
         text,
       };
 
+      console.log(fields);
       const { data } = isEditing
         ? await axios.patch(`/posts/${id}`, fields)
         : await axios.post('/posts', fields);
