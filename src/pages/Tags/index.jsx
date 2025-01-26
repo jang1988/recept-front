@@ -82,7 +82,9 @@ export const Tags = () => {
                             user={obj.user}
                             createdAt={obj.createdAt}
                             viewsCount={obj.viewsCount}
-                            commentsCount={3}
+                            commentsCount={
+                                comments.filter((comment) => comment.postId === obj._id).length
+                            }
                             tags={obj.tags}
                             isEditable={userData?._id === obj.user._id}
                         />

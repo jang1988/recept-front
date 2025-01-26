@@ -11,6 +11,7 @@ import { fetchAuthMe } from '../redux/slices/auth';
 
 export const FullPost = () => {
     const [data, setData] = React.useState();
+
     const [comments, setComments] = React.useState([]);
     const [isLoading, setLoading] = React.useState(true);
     const user = useSelector((state) => state.auth.data);
@@ -63,12 +64,18 @@ export const FullPost = () => {
                 <ReactMarkdown children={data.text} />
             </Post>
             <CommentsBlock items={comments} isLoading={false}>
-                <Index
-                    postId={id}
-                    onAddComment={handleAddComment}
-                    imageUrl={user.avatarUrl}
-                    fullName={user.fullName}
-                />
+                {user ? (
+                    <Index
+                        postId={id}
+                        onAddComment={handleAddComment}
+                        imageUrl={user.avatarUrl}
+                        fullName={user.fullName}
+                    />
+                ) : (
+                    <p style={{ textAlign: 'center', marginTop: '20px' }}>
+                        Чтобы оставить комментарий, <a href="/login">войдите</a> в систему.
+                    </p>
+                )}
             </CommentsBlock>
         </>
     );
